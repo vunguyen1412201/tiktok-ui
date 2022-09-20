@@ -7,7 +7,12 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 const cx = classNames.bind(styles);
 const defaultFn = () => {};
-function Menu({ children, items = [], onChange = defaultFn }) {
+function Menu({
+    hideOnClick = false,
+    children,
+    items = [],
+    onChange = defaultFn,
+}) {
     const [history, setHistory] = useState([{ data: items }]);
     const current = history[history.length - 1];
     // console.log(current);
@@ -35,6 +40,7 @@ function Menu({ children, items = [], onChange = defaultFn }) {
             interactive
             delay={[0, 700]}
             offset={[12, 8]}
+            hideOnClick={hideOnClick}
             placement="bottom-end"
             render={(attrs) => (
                 <div className={cx('menu-list')} tabIndex="-1" {...attrs}>
@@ -50,7 +56,7 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                                 }
                             />
                         )}
-                        {renderItems()}
+                        <div className={cx('menu-body')}>{renderItems()}</div>
                     </PopperWrapper>
                 </div>
             )}
